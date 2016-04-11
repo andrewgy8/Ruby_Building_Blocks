@@ -3,7 +3,7 @@ def stock_picker(stocks)
 	high = []
 	low = []
 	#puts first number in stock set to the high array
-	high.push(stocks[0])
+	high << stocks[0]
 	#iterates through stock array to test whether they are higher in value than the current high array value
 	#if it is the high array is emptied, and the new value take its place
 	stocks.each do |stock|
@@ -20,11 +20,21 @@ def stock_picker(stocks)
 			low.push(stock)
 		end
 	end
+			
 	#finding the defference in the high and low array
 	high_low = high + low
+	
+	#determines if the user has the ability of buying the low stock before the high one 
+	if stocks.index(high_low.max) < stocks.index(high_low.min)
+		stocks.delete(high_low[0])
+		stock_picker(stocks)
+		return high_low
+	end
+
 	puts high_low.inspect
-	difference = high_low[0] - high_low[1]
-	puts "The total money you could possibly make is " + difference.to_s
+	difference = high_low.max - high_low.min
+	puts "The total money you could possibly make is " + difference.to_s	
+	
 end
 
-stock_picker([18,3,6,9,15,8,6,45,10])
+stock_picker([7,2,6,9,15,8,6,49,10])
