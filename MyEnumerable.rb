@@ -51,7 +51,7 @@ module MyEnumerable
 		puts output
 	end
 
-	def my_inject(num = 0)
+	def my_inject(num = 1)
 		return self unless block_given?
 		output = num
 		self.my_each { |i| output = yield(output, i) }

@@ -8,4 +8,6 @@ Contains:
 -stock picker
 -substrings (this can probably be refactored)
 -bubble sort
+-MyEnumerables + script
+
 
