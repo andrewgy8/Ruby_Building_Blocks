@@ -1,4 +1,3 @@
-require 'set'
 
 class Game
 	attr_writer :board
@@ -6,25 +5,32 @@ class Game
 		@player1 = player1
 		@player2 = player2
 		@board = Array.new(10, nil)
-		@WIN_COMBO = [[1,2,3],[4,5,6],[7,8,9],[1,4,7],[2,5,8],[3,6,9],[1,5,8],[3,5,7]]
+		@WIN_COMBO = [[1,2,3],[4,5,6],[7,8,9],[1,4,7],[2,5,8],[3,6,9],[1,5,9],[3,5,7]]
 		@turns = 0
 		game_loop
 	end
 	
 	def show_board
-		puts "Here is a mock up of the clear board."
+		
 		column, row = ' | ', '--+---+--'
+
+		#for each spot on "the board", it determines if its occupied by a marker
+		#if it is, it prints that marker, if not, it prints the number associated with that spot
 		space_marker = lambda{|position| @board[position] ? @board[position] : position}
 		row_numbers = [[1,2,3],[4,5,6],[7,8,9]]
+		
+		#for each number in the row, it joins the column seperator 
+		#with either the position number or marker sotred in the object variable @board
 		row_for_print = lambda{|row| row.map(&space_marker).join(column)}
+		
+		#iterates through row numbers with another lambda, row for print
 		rows_for_display = row_numbers.map(&row_for_print)
+		
 		puts rows_for_display.join("\n" + row + "\n")
-		#2.times {puts row}
-		#puts @board
+		
 	end
 
 	def check_for_a_win?(player)
-
 		#I beleive this can refacotred and moved into a lambda
 		#puts 'This is the index number'
 		x_check_array = @board.each_index.select {|i| @board[i] == 'X'}
@@ -34,9 +40,13 @@ class Game
 		x_combo_check = x_check_array.combination(3).to_a
 		o_combo_check = o_check_array.combination(3).to_a
 		#puts x_combo_check.inspect
+		#puts o_combo_check.inspect
+
 		x_combo_check_block = x_combo_check.collect {|combo| @WIN_COMBO.include?(combo)}
 		o_combo_check_block = o_combo_check.collect {|combo| @WIN_COMBO.include?(combo)}
-		#puts combo_check_block.inspect
+		#puts x_combo_check_block.inspect
+		#puts o_combo_check_block.inspect
+
 		if o_combo_check_block.any? == true
 			puts "You win #{player.name}"
 		elsif x_combo_check_block.any? == true
@@ -52,7 +62,11 @@ class Game
 	def choice(player)
 		#show_board
 		puts "What would you like to pick #{player.name}?"
-		pick = gets.chomp.to_i
+		players_pick = gets.chomp.to_i
+		#if players_pick > 9
+		#	puts "Oops! You have picked to large of a number. Please choose again."
+		#	choice(player)
+		#end
 		
 	end
 	
@@ -66,7 +80,7 @@ class Game
 	end
 
 	def game_loop
-		while @turns < 9
+		while @turns < 10
 			show_board
 			player = current_player
 			pick = choice(player)
@@ -75,9 +89,10 @@ class Game
 				puts 'End of game!'
 				break
 			end
-
 			@turns += 1
 		end
+		puts 'This seems to of been a cats game'
+
 	end
 
 end
