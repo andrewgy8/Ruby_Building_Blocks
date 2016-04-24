@@ -4,14 +4,17 @@ class Game
 	def initialize(player1, player2)
 		@player1 = player1
 		@player2 = player2
+		
+		#The blank "board" imagined as an array
 		@board = Array.new(10, nil)
+		
+		#All the win conditions
 		@WIN_COMBO = [[1,2,3],[4,5,6],[7,8,9],[1,4,7],[2,5,8],[3,6,9],[1,5,9],[3,5,7]]
 		@turns = 0
-		game_loop
+		game_engine
 	end
 	
 	def show_board
-		
 		column, row = ' | ', '--+---+--'
 
 		#for each spot on "the board", it determines if its occupied by a marker
@@ -33,23 +36,14 @@ class Game
 	def check_for_a_win?(player)
 		#I beleive this can refacotred and moved into a lambda
 		#puts 'This is the index number'
-		x_check_array = @board.each_index.select {|i| @board[i] == 'X'}
-		o_check_array = @board.each_index.select {|i| @board[i] == 'O'}
+		check_array = @board.each_index.select {|i| @board[i] == player.marker}
 		#puts a_check_array.inspect
-
-		x_combo_check = x_check_array.combination(3).to_a
-		o_combo_check = o_check_array.combination(3).to_a
+		combo_check = x_check_array.combination(3).to_a
 		#puts x_combo_check.inspect
-		#puts o_combo_check.inspect
-
-		x_combo_check_block = x_combo_check.collect {|combo| @WIN_COMBO.include?(combo)}
-		o_combo_check_block = o_combo_check.collect {|combo| @WIN_COMBO.include?(combo)}
+		combo_check_block = x_combo_check.collect {|combo| @WIN_COMBO.include?(combo)}
 		#puts x_combo_check_block.inspect
-		#puts o_combo_check_block.inspect
 
-		if o_combo_check_block.any? == true
-			puts "You win #{player.name}"
-		elsif x_combo_check_block.any? == true
+		if combo_check_block.any? == true
 			puts "You win #{player.name}"
 		else 
 			false
@@ -61,11 +55,12 @@ class Game
 	end
 	def choice(player)
 		#show_board
+		#this can be a begin/recue 
 		puts "What would you like to pick #{player.name}?"
 		players_pick = gets.chomp.to_i
 		#if players_pick > 9
 		#	puts "Oops! You have picked to large of a number. Please choose again."
-		#	choice(player)
+		#	return choice(player)
 		#end
 		
 	end
@@ -79,7 +74,7 @@ class Game
 		@turns % 2 == 0 ? @player1 : @player2
 	end
 
-	def game_loop
+	def game_engine
 		while @turns < 10
 			show_board
 			player = current_player
