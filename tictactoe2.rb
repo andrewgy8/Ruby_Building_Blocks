@@ -49,10 +49,7 @@ class Game
 			false
 		end
 	end
-	def add_win_loss
-
-		
-	end
+	
 	def choice(player)
 		#show_board
 		#this can be a begin/recue 
@@ -66,8 +63,7 @@ class Game
 	end
 	
 	def assign_choice_to_board(pick, player)
-		@board[pick] = player.marker
-		
+		@board[pick] = player.marker	
 	end
 
 	def current_player
@@ -87,9 +83,8 @@ class Game
 			@turns += 1
 		end
 		puts 'This seems to of been a cats game'
-
 	end
-
+	
 end
 
 class Player
@@ -97,15 +92,13 @@ class Player
 	def initialize(marker, name)
 		@marker = marker
 		@name = name
-		@wins = 0
-
 		print_name
 	end
 	
 	def print_name
 		puts "Hello #{@name}"
-		puts "You are about to play tictactoe with anohter human."
-		puts "And your marker is #{@marker}"
+		puts "You are about to play tictactoe."
+		puts "Your marker is #{@marker}"
 	end
 	
 end
