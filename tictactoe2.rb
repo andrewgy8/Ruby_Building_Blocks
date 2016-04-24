@@ -13,12 +13,19 @@ class Game
 	
 	def show_board
 		puts "Here is a mock up of the clear board."
-		column, row = '|', '---+---+---'
-		2.times {puts row}
-		puts @board
+		column, row = ' | ', '--+---+--'
+		space_marker = lambda{|position| @board[position] ? @board[position] : position}
+		row_numbers = [[1,2,3],[4,5,6],[7,8,9]]
+		row_for_print = lambda{|row| row.map(&space_marker).join(column)}
+		rows_for_display = row_numbers.map(&row_for_print)
+		puts rows_for_display.join("\n" + row + "\n")
+		#2.times {puts row}
+		#puts @board
 	end
 
 	def check_for_a_win?(player)
+
+		#I beleive this can refacotred and moved into a lambda
 		#puts 'This is the index number'
 		x_check_array = @board.each_index.select {|i| @board[i] == 'X'}
 		o_check_array = @board.each_index.select {|i| @board[i] == 'O'}
@@ -60,6 +67,7 @@ class Game
 
 	def game_loop
 		while @turns < 9
+			show_board
 			player = current_player
 			pick = choice(player)
 			assign_choice_to_board(pick, player)
