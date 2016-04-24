@@ -13,40 +13,45 @@ class Game
 	
 	def show_board
 		puts "Here is a mock up of the clear board."
-		
-		row = '---+---+---'
-		3.times {puts row}
+		column, row = '|', '---+---+---'
+		2.times {puts row}
 		puts @board
 	end
 
-	def check_for_a_win?
-		puts 'This is the index number'
-		a_check_array = @board.each_index.select {|i| @board[i]== 'X'}
-		puts a_check_array.inspect
+	def check_for_a_win?(player)
+		#puts 'This is the index number'
+		x_check_array = @board.each_index.select {|i| @board[i] == 'X'}
+		o_check_array = @board.each_index.select {|i| @board[i] == 'O'}
+		#puts a_check_array.inspect
 
-		combo_check = a_check_array.combination(3).to_a
-		puts combo_check.inspect
-		combo_check_block = combo_check.collect {|combo| @WIN_COMBO.include?(combo)}
+		x_combo_check = x_check_array.combination(3).to_a
+		o_combo_check = o_check_array.combination(3).to_a
+		#puts x_combo_check.inspect
+		x_combo_check_block = x_combo_check.collect {|combo| @WIN_COMBO.include?(combo)}
+		o_combo_check_block = o_combo_check.collect {|combo| @WIN_COMBO.include?(combo)}
 		#puts combo_check_block.inspect
-		if combo_check_block.any? == true
-			puts 'You win!'
+		if o_combo_check_block.any? == true
+			puts "You win #{player.name}"
+		elsif x_combo_check_block.any? == true
+			puts "You win #{player.name}"
+		else 
+			false
 		end
-
-		#if @WIN_COMBO.any? {|combo| combo == a_check_array} 
-		#	puts 'You win!'
-		#end
 	end
-	def choice
-		show_board
-		player = current_player
-		puts "What would you like to pick?"
+	def add_win_loss
+
+		
+	end
+	def choice(player)
+		#show_board
+		puts "What would you like to pick #{player.name}?"
 		pick = gets.chomp.to_i
-		assign_choice_to_board(pick, player)
+		
 	end
 	
 	def assign_choice_to_board(pick, player)
 		@board[pick] = player.marker
-		check_for_a_win?
+		
 	end
 
 	def current_player
@@ -54,8 +59,15 @@ class Game
 	end
 
 	def game_loop
-		while @turns < 10
-			choice
+		while @turns < 9
+			player = current_player
+			pick = choice(player)
+			assign_choice_to_board(pick, player)
+			if check_for_a_win?(player) != false
+				puts 'End of game!'
+				break
+			end
+
 			@turns += 1
 		end
 	end
@@ -67,6 +79,8 @@ class Player
 	def initialize(marker, name)
 		@marker = marker
 		@name = name
+		@wins = 0
+
 		print_name
 	end
 	
@@ -74,7 +88,6 @@ class Player
 		puts "Hello #{@name}"
 		puts "You are about to play tictactoe with anohter human."
 		puts "And your marker is #{@marker}"
-		
 	end
 	
 end
