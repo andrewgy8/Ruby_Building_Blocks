@@ -34,14 +34,9 @@ class Game
 	end
 
 	def check_for_a_win?(player)
-		#I beleive this can refacotred and moved into a lambda
-		#puts 'This is the index number'
 		check_array = @board.each_index.select {|i| @board[i] == player.marker}
-		#puts a_check_array.inspect
-		combo_check = x_check_array.combination(3).to_a
-		#puts x_combo_check.inspect
-		combo_check_block = x_combo_check.collect {|combo| @WIN_COMBO.include?(combo)}
-		#puts x_combo_check_block.inspect
+		combo_check = check_array.combination(3).to_a
+		combo_check_block = combo_check.collect {|combo| @WIN_COMBO.include?(combo)}
 
 		if combo_check_block.any? == true
 			puts "You win #{player.name}"
@@ -51,14 +46,20 @@ class Game
 	end
 	
 	def choice(player)
-		#show_board
-		#this can be a begin/recue 
-		puts "What would you like to pick #{player.name}?"
-		players_pick = gets.chomp.to_i
-		#if players_pick > 9
-		#	puts "Oops! You have picked to large of a number. Please choose again."
-		#	return choice(player)
-		#end
+
+		begin
+			puts "What would you like to pick #{player.name}?"
+			players_pick = gets.chomp.to_i
+			if players_pick < 10
+				players_pick
+			else
+				raise 'Number is not valid for this board'
+			end
+		rescue StandardError =>e
+			puts "\tCaught: #{e}"
+			puts "Please input a number between 0 and 9"
+			retry
+		end
 		
 	end
 	
@@ -82,9 +83,9 @@ class Game
 			end
 			@turns += 1
 		end
-		puts 'This seems to of been a cats game'
+		
 	end
-	
+
 end
 
 class Player
