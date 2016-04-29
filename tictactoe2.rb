@@ -1,3 +1,7 @@
+#There are a few things that need to be fixed:
+#1)duplicate numbers inputted are not counted, nor is an error given
+#2) refactoring the if/else statments
+#3) Add AI player.
 
 class Game
 	attr_writer :board
@@ -11,7 +15,7 @@ class Game
 		#All the win conditions
 		@WIN_COMBO = [[1,2,3],[4,5,6],[7,8,9],[1,4,7],[2,5,8],[3,6,9],[1,5,9],[3,5,7]]
 		@turns = 0
-		game_engine
+		
 	end
 	
 	def show_board
@@ -38,7 +42,7 @@ class Game
 		combo_check = check_array.combination(3).to_a
 		combo_check_block = combo_check.collect {|combo| @WIN_COMBO.include?(combo)}
 
-		if combo_check_block.any? == true
+		if combo_check_block.any?
 			puts "You win #{player.name}"
 		else 
 			false
@@ -83,9 +87,7 @@ class Game
 			end
 			@turns += 1
 		end
-		
 	end
-
 end
 
 class Player
@@ -105,5 +107,8 @@ class Player
 end
 
 
+andrew = Player.new('X', 'Andrew')
+eva = Player.new('O', 'Eva')
+my_game = Game.new(andrew, eva)
 
-my_game = Game.new(Player.new('X', 'Andrew'), Player.new('O', 'Eva'))
+my_game.game_engine
