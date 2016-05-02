@@ -11,6 +11,8 @@ class Board
 
 	def game_loop
 		while @turns > 0
+			puts @word.inspect
+			puts @word_fill.join.inspect
 			show_word_progress
 			letter = letter_guess
 			letter_scan(letter)
@@ -35,10 +37,7 @@ class Board
 	end	
 
 	def check_for_win
-		if @word_fill.join == @word
-			puts "You win #{@player.name}!"
-				
-		end
+		abort("You win #{@player.name}!") unless @word_fill.join != @word
 	end
 
 	def negative_response
@@ -47,9 +46,9 @@ class Board
 	end
 
 	def insert_letter(letter)
-		index_for_letter = @word.each_index.select {|x| @word[x] == letter}
-		puts index_for_letter.inspect
-		@word_fill[index_for_letter] = letter + ' '
+		word_array = @word.split('')
+		index_for_letter = word_array.each_index.select {|x| @word[x] == letter}
+		index_for_letter.each {|x| @word_fill[x] = letter + ' '}
 	end
 	
 	def show_guessed_letters(letter)
@@ -85,6 +84,7 @@ class Computer
 		count = line_counter
 		line_number = pick_line_number(count)
 		hangman_word = pick_word(line_number)
+		hangman_word.chomp!
 		word_length_checker(hangman_word)
 		
 	end
@@ -122,7 +122,6 @@ human = HumanPlayer.new('Andrew')
 comp = Computer.new('hangman_dic.txt')
 comps_word = comp.word_choice_path
 
-comps_word.chomp!
 puts comps_word.inspect
 game = Board.new(human, comp, comps_word)
 game.game_loop
