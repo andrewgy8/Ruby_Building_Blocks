@@ -1,3 +1,5 @@
+require 'yaml'
+
 class Board
 	
 	def initialize(player, computer, word)
@@ -5,13 +7,15 @@ class Board
 		@player = player
 		@computer = computer
 		@turns = 5
-		@word_fill = Array.new(@word.length) { "__ " }
+		@word_progress = Array.new(@word.length) { "__ " }
 		@word_fill_compare = Array.new(@word.length) { nil }
 		@guessed_letters = Array.new { nil }
 	end
 
 	def game_loop
+		load_decision
 		while @turns > 0
+			save_decision
 			show_word_progress
 			show_guessed_letters
 			letter = letter_guess
@@ -19,22 +23,65 @@ class Board
 			check_for_win
 			puts "***" * 10
 		end
-		
+
 		#if the player loses, the word is displyed
 		if @turns == 0
 			word_display
 		end
 	end
 
+	def save_decision
+		puts "Would you like to save the game?"
+		puts "Press enter to continue or type 'yes' to save."
+		decision = gets.chomp.downcase
+		if decision == 'yes'
+			save_game
+		end
+	end
+
+	def save_game
+
+		data = {}
+			data[:word] = @word
+			data[:word_progress] = @word_progress
+			data[:guessed_letters] = @guessed_letters
+			data[:turns] = @turns
+			data[:word_fill_compare] = @word_fill_compare
+
+		File.open('save1.yaml', 'w') do |file|
+			file.write YAML.dump(data)
+			file.close
+		end 
+
+		puts "Saved game..."
+	end
+
+	def load_decision
+		puts "Would you like to load a previous game?"
+		puts "Please type 'yes' or press enter to continue."
+		decision = gets.chomp.downcase
+		if decision == 'yes'
+			load_game
+		end
+	end
+
+	def load_game
+		
+		data = YAML.load_file("save1.yaml")
+		data.game_loop
+		puts data	
+	end
+
 	def letter_guess
 		puts "What letter would you like to guess #{@player.name}"
 		letter_guess = gets.chomp.downcase
 	end
+
 	def word_display
 		puts "Sorry #{@player.name}, but you have lost."
 		puts "The word was #{@word}."
-		
 	end
+
 	def letter_scan (letter)
 		#determine if the letter exists in the word
 		if @word.downcase.include? (letter)
@@ -63,7 +110,7 @@ class Board
 
 		word_array = @word.split('')
 		index_for_letter = word_array.each_index.select {|x| @word[x] == letter}
-		index_for_letter.each {|x| @word_fill[x] = letter + ' '}
+		index_for_letter.each {|x| @word_progress[x] = letter + ' '}
 		index_for_letter.each {|x| @word_fill_compare[x] = letter}
 	end
 	
@@ -80,7 +127,7 @@ class Board
 
 	def show_word_progress
 		#Prints the Array of word progress
-		puts @word_fill.join
+		puts @word_progress.join
 	end
 
 	def show_hangman
