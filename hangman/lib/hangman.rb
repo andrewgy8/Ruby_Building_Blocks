@@ -5,19 +5,22 @@ class Board
 		@player = player
 		@computer = computer
 		@turns = 5
-		@word_fill = Array.new(@word.length - 1) { "__ " }
+		@word_fill = Array.new(@word.length) { "__ " }
+		@word_fill_compare = Array.new(@word.length) { nil }
 		@guessed_letters = Array.new { nil }
 	end
 
 	def game_loop
 		while @turns > 0
-			puts @word.inspect
-			puts @word_fill.join.inspect
 			show_word_progress
+			show_guessed_letters
 			letter = letter_guess
 			letter_scan(letter)
 			check_for_win
 			puts "***" * 10
+		end
+		if @turns == 0
+			word_display
 		end
 	end
 
@@ -25,34 +28,42 @@ class Board
 		puts "What letter would you like to guess #{@player.name}"
 		letter_guess = gets.chomp.downcase
 	end
-	
+	def word_display
+		puts "Sorry #{@player.name}, but you have lost."
+		puts "The word was #{@word}."
+		
+	end
 	def letter_scan (letter)
 		if @word.downcase.include? (letter)
+			puts "Correct! #{letter} is in the word."
 			insert_letter (letter)
 		else
 			@turns -= 1
 			negative_response
-			show_guessed_letters(letter)
+			guessed_letters(letter)
 		end
 	end	
 
 	def check_for_win
-		abort("You win #{@player.name}!") unless @word_fill.join != @word
+		abort("You win #{@player.name}! You guessed #{@word}") unless @word_fill_compare.join != @word
 	end
 
 	def negative_response
 		puts "Im sorry, but your guess is not in the chosen word."
-		puts "Please choose again."	
 	end
 
 	def insert_letter(letter)
 		word_array = @word.split('')
 		index_for_letter = word_array.each_index.select {|x| @word[x] == letter}
 		index_for_letter.each {|x| @word_fill[x] = letter + ' '}
+		index_for_letter.each {|x| @word_fill_compare[x] = letter}
 	end
 	
-	def show_guessed_letters(letter)
+	def guessed_letters(letter)
 		@guessed_letters << letter
+	end
+
+	def show_guessed_letters
 		puts "These are the letters you have guessed so far:" + @guessed_letters.inspect
 		puts "You have #{@turns} mistakes left."
 	end
@@ -84,7 +95,7 @@ class Computer
 		count = line_counter
 		line_number = pick_line_number(count)
 		hangman_word = pick_word(line_number)
-		hangman_word.chomp!
+		hangman_word.chomp!.downcase!
 		word_length_checker(hangman_word)
 		
 	end
@@ -118,11 +129,11 @@ class Computer
 	end
 end
 
-human = HumanPlayer.new('Andrew')
+human = HumanPlayer.new('EVA')
 comp = Computer.new('hangman_dic.txt')
 comps_word = comp.word_choice_path
 
-puts comps_word.inspect
+#puts comps_word.inspect
 game = Board.new(human, comp, comps_word)
 game.game_loop
 
