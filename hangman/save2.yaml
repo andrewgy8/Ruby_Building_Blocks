@@ -1,23 +1,40 @@
 --- !ruby/object:Board
-word: betcha
+word: sadomasochistic
 player: !ruby/object:HumanPlayer
   name: EVA
 computer: !ruby/object:Computer
   dictionary: hangman_dic.txt
-turns: 4
+turns: 5
 word_progress:
 - '__ '
+- 'a '
 - '__ '
 - '__ '
-- 'c '
 - '__ '
 - 'a '
+- '__ '
+- '__ '
+- '__ '
+- '__ '
+- 'i '
+- '__ '
+- '__ '
+- 'i '
+- '__ '
 word_fill_compare:
 - 
+- a
 - 
 - 
-- c
 - 
 - a
-guessed_letters:
+- 
+- 
+- 
+- 
 - i
+- 
+- 
+- i
+- 
+guessed_letters: []

@@ -41,15 +41,8 @@ class Board
 
 	def save_game
 
-		data = {}
-			data[:word] = @word
-			data[:word_progress] = @word_progress
-			data[:guessed_letters] = @guessed_letters
-			data[:turns] = @turns
-			data[:word_fill_compare] = @word_fill_compare
-
-		File.open('save1.yaml', 'w') do |file|
-			file.write YAML.dump(data)
+		File.open('save2.yaml', 'w') do |file|
+			file.write YAML.dump(self)
 			file.close
 		end 
 
@@ -66,10 +59,8 @@ class Board
 	end
 
 	def load_game
-		
-		data = YAML.load_file("save1.yaml")
-		data.game_loop
-		puts data	
+		data = YAML.load_file("save2.yaml")
+			return data.game_loop
 	end
 
 	def letter_guess
