@@ -19,6 +19,8 @@ class Board
 			check_for_win
 			puts "***" * 10
 		end
+		
+		#if the player loses, the word is displyed
 		if @turns == 0
 			word_display
 		end
@@ -34,6 +36,7 @@ class Board
 		
 	end
 	def letter_scan (letter)
+		#determine if the letter exists in the word
 		if @word.downcase.include? (letter)
 			puts "Correct! #{letter} is in the word."
 			insert_letter (letter)
@@ -53,6 +56,11 @@ class Board
 	end
 
 	def insert_letter(letter)
+		#pushs guessed letter into two different arrays
+		#the one to be displayed with the underscores, and the other to check with a win.
+		#since the @word_fill has a space after the letter for formatting reasons.
+		#For words with the same letter multiple times, it scans through and returns the index number of the letter multiple times.  
+
 		word_array = @word.split('')
 		index_for_letter = word_array.each_index.select {|x| @word[x] == letter}
 		index_for_letter.each {|x| @word_fill[x] = letter + ' '}
@@ -60,15 +68,18 @@ class Board
 	end
 	
 	def guessed_letters(letter)
+		#inserts guessed letter into array
 		@guessed_letters << letter
 	end
 
 	def show_guessed_letters
+		#Prints guessed letters and number of turns left
 		puts "These are the letters you have guessed so far:" + @guessed_letters.inspect
 		puts "You have #{@turns} mistakes left."
 	end
 
 	def show_word_progress
+		#Prints the Array of word progress
 		puts @word_fill.join
 	end
 
@@ -95,12 +106,13 @@ class Computer
 		count = line_counter
 		line_number = pick_line_number(count)
 		hangman_word = pick_word(line_number)
+		#cuts /n off of the chosen word
 		hangman_word.chomp!.downcase!
 		word_length_checker(hangman_word)
-		
 	end
 
 	def word_length_checker(hangman_word)
+		#Determines if the chosen word is 5 characters long, if not, it reruns the path.
 		if hangman_word.to_s.length < 5
 			hangman_word = word_choice_path
 		else
@@ -109,6 +121,7 @@ class Computer
 	end
 
 	def pick_word(line_number)
+		#Goes to the random line number and extracts the word
 		f = File.open(@dictionary) do |file|
 			current_line = 1
 			file.each do |line|
@@ -120,11 +133,12 @@ class Computer
 	end
 
 	def line_counter
+		#Count number of lines in the given text file
 		count = %x{wc -l #{@dictionary}}.split.first.to_i
-		
 	end
 
 	def pick_line_number(total_lines)
+		#Picks a random line number
 		 rand(1...total_lines)
 	end
 end
