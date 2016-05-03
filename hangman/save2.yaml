@@ -1,40 +1,36 @@
 --- !ruby/object:Board
-word: sadomasochistic
+word: frightfully
 player: !ruby/object:HumanPlayer
   name: EVA
 computer: !ruby/object:Computer
   dictionary: hangman_dic.txt
-turns: 5
+turns: 1
 word_progress:
 - '__ '
-- 'a '
-- '__ '
-- '__ '
-- '__ '
-- 'a '
-- '__ '
-- '__ '
-- '__ '
-- '__ '
+- 'r '
 - 'i '
 - '__ '
 - '__ '
-- 'i '
+- '__ '
+- '__ '
+- 'u '
+- '__ '
+- '__ '
 - '__ '
 word_fill_compare:
 - 
-- a
-- 
-- 
-- 
-- a
-- 
-- 
-- 
-- 
+- r
 - i
 - 
 - 
-- i
 - 
-guessed_letters: []
+- 
+- u
+- 
+- 
+- 
+guessed_letters:
+- a
+- e
+- o
+- s

@@ -13,9 +13,9 @@ class Board
 	end
 
 	def game_loop
-		load_decision
+		
 		while @turns > 0
-			save_decision
+			user_menu
 			show_word_progress
 			show_guessed_letters
 			letter = letter_guess
@@ -30,32 +30,28 @@ class Board
 		end
 	end
 
-	def save_decision
-		puts "Would you like to save the game?"
-		puts "Press enter to continue or type 'yes' to save."
-		decision = gets.chomp.downcase
-		if decision == 'yes'
-			save_game
-		end
-	end
-
 	def save_game
-
 		File.open('save2.yaml', 'w') do |file|
 			file.write YAML.dump(self)
 			file.close
 		end 
-
 		puts "Saved game..."
 	end
-
-	def load_decision
-		puts "Would you like to load a previous game?"
-		puts "Please type 'yes' or press enter to continue."
-		decision = gets.chomp.downcase
-		if decision == 'yes'
-			load_game
-		end
+	def user_menu
+		puts "What would you like to do?\n Type: s(save), l(load), q(quit), or press enter to continue."
+		decision = gets.chomp
+		case decision
+			when 's'
+		 		save_game
+		 	when 'l'
+		 		load_game
+		 	#when 'q'
+		 	#	quit
+		 	#when 'd'
+		 	#	delete
+		 	else
+		 		puts 'Play on!'
+		end 
 	end
 
 	def load_game
@@ -66,11 +62,6 @@ class Board
 	def letter_guess
 		puts "What letter would you like to guess #{@player.name}"
 		letter_guess = gets.chomp.downcase
-	end
-
-	def word_display
-		puts "Sorry #{@player.name}, but you have lost."
-		puts "The word was #{@word}."
 	end
 
 	def letter_scan (letter)
@@ -84,6 +75,10 @@ class Board
 			guessed_letters(letter)
 		end
 	end	
+
+	def word_display
+		abort("Sorry #{@player.name}, but you have lost.\nThe word was #{@word}.") 
+	end
 
 	def check_for_win
 		abort("You win #{@player.name}! You guessed #{@word}") unless @word_fill_compare.join != @word
