@@ -89,7 +89,6 @@ class ComputerPlayer
 
 	def initialize(code)
 		@code = {0 => 'B', 1 => 'Y', 2 => 'O', 3 => 'W'}
-		
 	end
 	
 	def code_generator

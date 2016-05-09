@@ -37,6 +37,7 @@ class Board
 		end 
 		puts "Saved game..."
 	end
+
 	def user_menu
 		puts "What would you like to do?\n Type: s(save), l(load), q(quit), or press enter to continue."
 		decision = gets.chomp
@@ -115,12 +116,8 @@ class Board
 		#Prints the Array of word progress
 		puts @word_progress.join
 	end
-
-	def show_hangman
-		
-	end
-	
 end
+
 class HumanPlayer
 	attr_reader :name	
 	def initialize(name)
