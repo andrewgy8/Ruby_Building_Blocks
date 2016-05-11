@@ -1,4 +1,6 @@
+
 require 'jumpstart_auth'
+
 
 class TwitterBot
 
