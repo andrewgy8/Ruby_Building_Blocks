@@ -46,9 +46,10 @@ class Game
 		combo_check_block = combo_check.collect {|combo| @WIN_COMBO.include?(combo)}
 
 		if combo_check_block.any?
+			#If the game has been won, Twitter bot sends out a message
 			puts "You win #{player.name}"
 			tweet_out = TwitterBot.new
-			tweet_out.tweet("#{player.name} has won in tictacttoe")
+			tweet_out.tweet("#{player.name} has won this game of tictacttoe in only #{@turns} turns.")
 		else 
 			false
 		end
