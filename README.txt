@@ -9,9 +9,13 @@ Contains:
 -substrings (this can probably be refactored)
 -bubble sort
 -MyEnumerables + script
--TicTacToe (April 25, 2016, updated April 26)
--Hangman
+-TicTacToe (with/without TwitterBot function), (April 25, 2016, updated April 26)
+-Hangman 
 -Mastermind
+-TwitterBot
+-MergeSort
+-Fibbonaci Sequence
+
 
 
 
