@@ -1,14 +1,14 @@
-puts "enter the text:"
-input = gets.chomp
-split_up = input.split('')
-puts 'How many letters would you like to shift by?'
-number = gets.chomp.to_i
+#puts "enter the text:"
+#input = gets.chomp
+
+#puts 'How many letters would you like to shift by?'
+#number = gets.chomp.to_i
 
 
-def cipher(message, shift)
+def cipher(word, shift)
 	#the alphabet to index through
 	alphabet = 'abcdefghijklmnopqrstuvwxyz'
-	
+	message = word.split('')
 	#our message to be added to 
 	cipher_message = ''
 	
@@ -28,8 +28,9 @@ def cipher(message, shift)
 			end
 		end	
 	end
-	puts cipher_message
+	return cipher_message
 end
 
-cipher(split_up, number)
+
+#cipher(split_up, number)
 
