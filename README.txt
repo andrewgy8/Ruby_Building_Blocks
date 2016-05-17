@@ -4,7 +4,7 @@ Published to Git on Arpil 10, 2016
 Updated on April 13, 2016
 Updated on April 17, 2016
 Contains:
--Caesar Cipher
+-Caesar Cipher with RSpec testing
 -stock picker
 -substrings (this can probably be refactored)
 -bubble sort
