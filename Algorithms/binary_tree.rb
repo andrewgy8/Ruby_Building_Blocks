@@ -58,7 +58,7 @@ class Node
 
 			if value_to_check == target
 				puts "Value #{target} was found in node #{n}"
-				break
+				return n
 			else
 				if !n.rchild.nil? && !result.include?(n.rchild)
 					queue << n.rchild
@@ -74,6 +74,23 @@ class Node
 				end
 			end 
 		end
+	end
+
+	def dfs_rec(target)
+		node = nil
+
+		if self.value == target
+			puts "The value #{target} exists in the binary tree at node: #{self}."
+
+		else
+			if node.nil?
+				node = self.lchild.dfs_rec(target) if !self.lchild.nil?
+				return node.lchild if !node.nil?
+				node = self.rchild.dfs_rec(target) if !self.rchild.nil?
+				return node.rchild if !node.nil?
+			end
+		end
+		puts "Value #{target} was not found in this binary tree" if self.parent.nil? && node.nil?
 	end
 end
 
@@ -152,9 +169,13 @@ arry = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 324, 6345]
 #puts sorted_array
 bi_tree = build_tree(arry)
 look_tree(bi_tree)
+puts "----------BFS TEST---------"
 bi_tree.breadth_first_search(23)
 bi_tree.breadth_first_search(10)
+puts "----------DFS TEST---------"
 bi_tree.depth_first_search(23)
 bi_tree.depth_first_search(10)
-
+puts "----------DFS REC TEST---------"
+bi_tree.dfs_rec(23)
+bi_tree.dfs_rec(10)
 
