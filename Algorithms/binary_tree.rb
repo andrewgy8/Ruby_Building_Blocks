@@ -118,6 +118,31 @@ def look_tree(tree, level=0)
 	end
 end
 
+def display_builder(level, value, lchild, rchild)
+	puts %q<		
+					value 
+					/ \
+				lchild	rchild
+			>
+
+end
+def display_tree(tree, level=0)
+	if !tree.rchild.nil? || !tree.lchild.nil?
+		if !tree.lchild.nil?
+			puts "
+					\n\t\t\t\t#{tree.value} 
+						\n\t\t\t\t/ \\
+	\n\t\t\t\t#{tree.lchild.value}  #{tree.rchild.value}
+
+				" 
+		elsif !tree.rchild.nil?
+			print "Level: #{level} 	\n#{tree.value} <<<< #{tree.rchild.value}" 
+		end
+		display_tree(tree.lchild, level+1) if !tree.lchild.nil?
+		display_tree(tree.rchild, level+1) if !tree.rchild.nil?
+	end
+end
+
 #--------------------------
 #----Sorting algortihm-----
 #--------------------------
@@ -168,7 +193,9 @@ arry = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 324, 6345]
 #sorted_array = merge_sort(arry)
 #puts sorted_array
 bi_tree = build_tree(arry)
-look_tree(bi_tree)
+#look_tree(bi_tree)
+puts "<<<" * 50
+display_tree(bi_tree)
 puts "----------BFS TEST---------"
 bi_tree.breadth_first_search(23)
 bi_tree.breadth_first_search(10)
@@ -178,4 +205,16 @@ bi_tree.depth_first_search(10)
 puts "----------DFS REC TEST---------"
 bi_tree.dfs_rec(23)
 bi_tree.dfs_rec(10)
+
+
+
+# 				value
+# 				/	\
+# 			rchild	lchild
+#
+#
+#
+#
+#
+#
 
