@@ -37,4 +37,4 @@ def stock_picker(stocks)
 	
 end
 
-stock_picker([7,2,6,9,15,8,6,49,10])
+#stock_picker([7,2,6,9,15,8,6,49,10])

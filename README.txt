@@ -14,6 +14,11 @@ Contains:
 -Mastermind
 -TwitterBot
 -MergeSort
+-Binary Tree with:
+	-Breadth First Search
+	-Depth First Search
+	-Depth First Search with recursion
+	
 -Fibbonaci Sequence
 
 

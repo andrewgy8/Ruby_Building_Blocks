@@ -1,5 +1,4 @@
 require_relative 'MyEnumerable'
-include MyEnumerable
 
 a = [3,2,6,54,8,1]
 

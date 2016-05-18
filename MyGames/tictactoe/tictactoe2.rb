@@ -107,8 +107,8 @@ class Player
 end
 
 
-andrew = Player.new('X', 'Andrew')
-eva = Player.new('O', 'Eva')
-my_game = Game.new(andrew, eva)
+#andrew = Player.new('X', 'Andrew')
+#eva = Player.new('O', 'Eva')
+#my_game = Game.new(andrew, eva)
 
-my_game.game_engine
+#my_game.game_engine
