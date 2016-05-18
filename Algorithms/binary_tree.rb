@@ -46,10 +46,35 @@ class Node
 		puts "Value #{target} not found in the binary tree. \nPlease enter another value to check for."
 
 	end
-	def depth_first_search
 	
-	end
+	def depth_first_search(target)
+		queue = []
+		result = []
+		queue << self
+		while !queue.empty?
+			n = queue.last
+			value_to_check = n.value
+			#puts value_to_check
 
+			if value_to_check == target
+				puts "Value #{target} was found in node #{n}"
+				break
+			else
+				if !n.rchild.nil? && !result.include?(n.rchild)
+					queue << n.rchild
+				elsif !n.lchild.nil? && !result.include?(n.lchild)
+					queue << n.lchild
+				else
+					poppy_cock = queue.pop
+					result << poppy_cock
+					if queue.last == self
+						puts "Sorry value #{target} was not found in this binary tree."
+						break
+					end
+				end
+			end 
+		end
+	end
 end
 
 #--------------------------
@@ -129,5 +154,7 @@ bi_tree = build_tree(arry)
 look_tree(bi_tree)
 bi_tree.breadth_first_search(23)
 bi_tree.breadth_first_search(10)
+bi_tree.depth_first_search(23)
+bi_tree.depth_first_search(10)
 
 
