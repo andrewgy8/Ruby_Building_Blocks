@@ -28,7 +28,6 @@ end
 
 def build_tree(arry)
 	bi_tree = Node.new(arry.first)
-
 	arry.each_with_index do |x, i|
 		if i > 0 
 			bi_tree.add_node(x)
@@ -40,14 +39,11 @@ end
 def look_tree(tree, level=0)
 	if !tree.rchild.nil? || !tree.lchild.nil?
 		puts "Level: #{level}"
-		puts tree.value
 		puts "Left branch: #{tree.value} => #{tree.lchild.value}" if !tree.lchild.nil?
-		puts "Right branch: #{tree.value} => #{tree.rchild.vlaue}" if !tree.rchild.nil?
+		puts "Right branch: #{tree.value} => #{tree.rchild.value}" if !tree.rchild.nil?
 		look_tree(tree.lchild, level+1) if !tree.lchild.nil?
 		look_tree(tree.rchild, level+1) if !tree.rchild.nil?
 	end
-	
-	
 end
 #--------------------------
 #----Sorting algortihm-----
@@ -98,7 +94,8 @@ arry = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 324, 6345]
 
 #sorted_array = merge_sort(arry)
 #puts sorted_array
-build_tree(arry)
+bi_tree = build_tree(arry)
+look_tree(bi_tree)
 
 
 
