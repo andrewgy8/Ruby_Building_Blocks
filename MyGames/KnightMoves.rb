@@ -1,26 +1,9 @@
+#--------------------------
+#----Knight Movement-------
+#--------------------------
+
 class KnightMoves
-	attr_reader :value
-	attr_accessor :rchild, :lchild, :parent
 	
-	def initialize(value, parent = nil, lchild = nil, rchild = nil)
-		@value = value
-		@rchild = rchild
-		@lchild = lchild
-		@parent = parent
-	end
-
-	def add_possible_move(val)
-		if val <= self.value && self.lchild.nil?
-			self.lchild = KnightMoves.new(val, self)
-		elsif val<= self.value && self.lchild != nil 
-			self.lchild.add_node(val)
-		elsif val > self.value && self.rchild.nil?
-			self.rchild = KnightMoves.new(val, self)
-		elsif val > self.value && self.rchild != nil
-			self.rchild.add_node(val)
-		end
-	end
-
 	def knight_moves(finish)
 		#returns number of moves necessary to get to final position
 	end
@@ -28,69 +11,62 @@ class KnightMoves
 
 end
 
+#--------------------------
+#-----Knight Position------
+#--------------------------
+def a_possible_knight_move(x,y)
+	start = [x,y]
+	finish = [9,9]
+
+	possible_moves = []
+	while start != finish
+		if start[0] < 10 || start[1] < 10
+			x = start[0] + 3
+			y = start[1] + 2
+			possible_moves << [x,y]
+			puts possible_moves.inspect
+			a_possible_knight_move(x, y)
+		elsif start[0] >= 7 || start[1] >= 7
+			if start[0] >= 7 || start[1] >=7
+				x = start[0] - 3
+				y = start[1] - 2
+				possible_moves << [x, y]
+				puts possible_moves.inspect
+				a_possible_knight_move(x, y)
+
+		elsif 
+			puts "Computer says I cnat move anymore"
+			puts possible_moves.inspect
+			break
+		end
+	end
+end
 class Knight
 	attr_accessor :position
 	def initialize(position)
 		@position = position
+		create
 	end
+
 end
 
 #--------------------------
 #----------Board-----------
 #--------------------------
-a = [1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9]
-board = a.combination(2).to_a
-puts board.inspect
+Board = Struct.new("Board", :x, :y)
+
+
+
+
 #--------------------------
-#----Build Tree Methods----
+#----------Script----------
 #--------------------------
 
-def build_tree(arry)
-	bi_tree = KnightMoves.new(arry.first)
-	arry.each_with_index do |x, i|
-		if i > 0 
-			puts x.inspect
-			x.each do |position|
-				bi_tree.add_node(position)
-			end
-		end
-	end
-	bi_tree
-end
+#knight = Knight.new([0,0])
+#board_tree = build_tree(board)
+#look_tree(board_tree)
 
-def look_tree(tree, level=0)
-	if !tree.rchild.nil? || !tree.lchild.nil?
-		puts "Level: #{level}"
-		puts "Left branch: #{tree.value} => #{tree.lchild.value}" if !tree.lchild.nil?
-		puts "Right branch: #{tree.value} => #{tree.rchild.value}" if !tree.rchild.nil?
-		look_tree(tree.lchild, level+1) if !tree.lchild.nil?
-		look_tree(tree.rchild, level+1) if !tree.rchild.nil?
-	end
-end
-#--------------------------
-#----------Script-----------
-#--------------------------
-knight = Knight.new([0,0])
-board_tree = build_tree(board)
-look_tree(board_tree)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+a_possible_knight_move(0,0)
 
 
 
