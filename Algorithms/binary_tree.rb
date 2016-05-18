@@ -47,6 +47,7 @@ def look_tree(tree, level=0)
 		look_tree(tree.rchild, level+1) if !tree.rchild.nil?
 	end
 	
+	
 end
 #--------------------------
 #----Sorting algortihm-----
