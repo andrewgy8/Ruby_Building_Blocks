@@ -1,7 +1,8 @@
 class Node
-	attr_accessor :value, :rchild, :lchild, :parent
+	attr_reader :value
+	attr_accessor :rchild, :lchild, :parent
 
-	def initialize(value, rchild = nil, lchild = nil, parent = nil)
+	def initialize(value, parent = nil, lchild = nil, rchild = nil)
 		@value = value
 		@rchild = rchild
 		@lchild = lchild
@@ -13,9 +14,9 @@ class Node
 			self.lchild = Node.new(val, self)
 		elsif val<= self.value && self.lchild != nil 
 			self.lchild.add_node(val)
-		elsif val >= self.value && self.rchild.nil?
+		elsif val > self.value && self.rchild.nil?
 			self.rchild = Node.new(val, self)
-		elsif val >= self.value && self.rchild != nil
+		elsif val > self.value && self.rchild != nil
 			self.rchild.add_node(val)
 		end
 	end
@@ -29,13 +30,24 @@ def build_tree(arry)
 	bi_tree = Node.new(arry.first)
 
 	arry.each_with_index do |x, i|
-		if x > 0 
+		if i > 0 
 			bi_tree.add_node(x)
 		end
 	end
 	bi_tree
 end
 
+def look_tree(tree, level=0)
+	if !tree.rchild.nil? || !tree.lchild.nil?
+		puts "Level: #{level}"
+		puts tree.value
+		puts "Left branch: #{tree.value} => #{tree.lchild.value}" if !tree.lchild.nil?
+		puts "Right branch: #{tree.value} => #{tree.rchild.vlaue}" if !tree.rchild.nil?
+		look_tree(tree.lchild, level+1) if !tree.lchild.nil?
+		look_tree(tree.rchild, level+1) if !tree.rchild.nil?
+	end
+	
+end
 #--------------------------
 #----Sorting algortihm-----
 #--------------------------
@@ -83,9 +95,9 @@ end
 #--------------------------
 arry = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 324, 6345]
 
-sorted_array = merge_sort(arry)
+#sorted_array = merge_sort(arry)
 #puts sorted_array
-build_tree(sorted_array)
+build_tree(arry)
 
 
 
