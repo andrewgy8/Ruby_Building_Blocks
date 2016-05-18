@@ -20,6 +20,36 @@ class Node
 			self.rchild.add_node(val)
 		end
 	end
+
+	#--------------------------
+	#------Search Methods------
+	#--------------------------
+
+	def breadth_first_search(target)
+		queue = []
+		queue << self
+		#puts queue.inspect
+		while !queue.empty?
+			n = queue.shift
+			value_to_check = n.value
+
+			if value_to_check == target
+				puts "Value #{target} found in node #{n}"
+				return n
+			else 
+				#puts "Value #{target} not found in node #{n.value}"
+				#puts "Moving on..."
+				queue << n.lchild if !n.lchild.nil?
+				queue << n.rchild if !n.rchild.nil?
+			end
+		end
+		puts "Value #{target} not found in the binary tree. \nPlease enter another value to check for."
+
+	end
+	def depth_first_search
+	
+	end
+
 end
 
 #--------------------------
@@ -45,6 +75,7 @@ def look_tree(tree, level=0)
 		look_tree(tree.rchild, level+1) if !tree.rchild.nil?
 	end
 end
+
 #--------------------------
 #----Sorting algortihm-----
 #--------------------------
@@ -96,6 +127,7 @@ arry = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 324, 6345]
 #puts sorted_array
 bi_tree = build_tree(arry)
 look_tree(bi_tree)
-
+bi_tree.breadth_first_search(23)
+bi_tree.breadth_first_search(10)
 
 
